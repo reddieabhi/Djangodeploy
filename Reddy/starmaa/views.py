@@ -4,7 +4,7 @@ from django.http import  HttpResponse
 from .models import *
 
 
-print('hi')
+
 
 def working(request):
     return HttpResponse('working')
