@@ -16,11 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 from starmaa.views import *
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("",working,name="working"),
-    path("user/",userdata,name="userdata")
+    path("people_view",people_view,name = "people_view")
+    
 ]
+
+
+urlpatterns = staticfiles_urlpatterns()
