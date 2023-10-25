@@ -1,0 +1,4 @@
+builds:
+  - name: Build
+    env: python
+    buildCommand: "pip install -r requirements.txt"
