@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import dj_database_url
 import os
+import environ 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-=xy@*x&k97#iqskbl60b$6j6iq%3pk6b8-fz5%7wfvp0huv#xr"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -93,8 +94,13 @@ WSGI_APPLICATION = "Reddy.wsgi.application"
 #}
 
 
+
+env = environ.Env()
+
+environ.Env.read_env()
+
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default': dj_database_url.parse('postgres://django_7ffo_user:ERCOvEsSSyWXTSB3YjSDzFLqgHJcZ1Kz@dpg-ckunfamb0mos73buoldg-a.oregon-postgres.render.com/django_7ffo')
 }
 
 
