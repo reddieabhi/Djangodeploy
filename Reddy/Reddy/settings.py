@@ -82,16 +82,17 @@ WSGI_APPLICATION = "Reddy.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-#DATABASES = {
- #   'default': {
-  #      'ENGINE': 'django.db.backends.postgresql',
-   #     'NAME': 'Django',
-   #     'USER': 'Princedjango',
-    #    'PASSWORD': 'Bar309',
-    #    #'HOST': 'localhost',  # Or your database host
-     #   'PORT': '',  # Typically, it's an empty string for the default PostgreSQL port (5432)
-    #}
-#}
+
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME': 'Django',
+       'USER': 'Princedjango',
+       'PASSWORD': 'Bar309',
+       #'HOST': 'localhost',  # Or your database host
+       'PORT': '',  # Typically, it's an empty string for the default PostgreSQL port (5432)
+    }
+}
 
 
 
@@ -99,10 +100,11 @@ env = environ.Env()
 
 environ.Env.read_env()
 
+'''
 DATABASES = {
     'default': dj_database_url.parse('postgres://django_7ffo_user:ERCOvEsSSyWXTSB3YjSDzFLqgHJcZ1Kz@dpg-ckunfamb0mos73buoldg-a.oregon-postgres.render.com/django_7ffo')
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
