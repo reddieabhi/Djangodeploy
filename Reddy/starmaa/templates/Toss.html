@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+</head>
+<body>
+    <h1>You can toss a coin here</h1>
+    
+    <form class = "col-6 mx-auto card  p-3 shadow-lg" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <button type="submit">Toss the Coin</button>
+    </form>
+    
+    {% if result %}
+    <p>Result: {{ result }}</p>
+    {% endif %}
+</body>
+</html>

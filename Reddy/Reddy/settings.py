@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-=xy@*x&k97#iqskbl60b$6j6iq%3pk6b8-fz5%7wfvp0huv#xr"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -94,6 +94,7 @@ DATABASES = {
     }
 }
 '''
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -102,15 +103,16 @@ DATABASES = {
 }
 
 
+'''
+
 env = environ.Env()
 
 environ.Env.read_env()
 
-'''
 DATABASES = {
     'default': dj_database_url.parse('postgres://django_7ffo_user:ERCOvEsSSyWXTSB3YjSDzFLqgHJcZ1Kz@dpg-ckunfamb0mos73buoldg-a.oregon-postgres.render.com/django_7ffo')
 }
-'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -146,7 +148,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+import os
+
+
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+
+STATIC_FILES_DIR = {
+    os.path.join(BASE_DIR,"publis/static")
+}
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'public/static')
+
 MEDIA_URL = "media/"
 
 # Default primary key field type
