@@ -103,9 +103,22 @@ def stud_login(request):
         print('inside student_login post')
         data = request.POST
         id = data['login_id']
+        try:
+            id = int(id)
+        except ValueError:
+            messages.error(request,"Invalid Username")
+            return redirect('/stud_login/')
+        s = StudentLogin.objects.filter(login_id = id)
+        if len(s) == 0:
+            messages.error(request,"Invalid Username")
+            return redirect('/stud_login/')
+
         password = data['student_password']
 
-        stu = StudentLogin.objects.filter(login_id=id, login_password=password)
+        stu = s.filter(login_id=id, login_password=password)
+        if len(stu) == 0:
+            messages.error(request,"Invalid Password")
+            return redirect('/stud_login/')
         units = Unit.objects.all()
         context = {'stud':stu[0], 'unit':units}
         return render(request, "student_portal.html", context)
@@ -269,7 +282,7 @@ def update_student(request,st_id,unit_id):
         
 
         st.save()
-        
+        messages.success(request,'Updated student details succesfully')
         return redirect("/teacher")
         
 
@@ -296,8 +309,12 @@ def add_student(request):
         stu = StudentDetails.objects.create(student_id = st,st_name = st_name,st_standard = st_standard, st_birth_year = st_birth_year,
                                             st_birth_place = st_birth_place, st_parent_name = st_parent)
         subs = Subject.objects.all()
-        for s in subs:
-            Marks.objects.create(student = st,subject = s, marks = 1)
+        u = Unit.objects.all()
+        if len(u) > 0:
+            uo = u[len(u)-1]
+            for s in subs:
+                Marks.objects.create(student = st,subject = s, marks = 1,unit = uo)
+
         
         return redirect("/teacher")
 

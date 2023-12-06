@@ -35,11 +35,23 @@
     </style>
 </head>
 <body>
+
+
+
     <div class="container">
         <div class="card">
             <h2 class="text-center mb-4">Login to My School</h2>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
+
+                {% if messages %}
+                <div class="alert alert-primary" role="alert">
+                  {% for message in messages %}
+                  {{ message }}
+                  {% endfor %}
+                </div>
+                {% endif %}
+                
                 <div class="form-group">
                     <label for="exampleInputEmail1">Student ID</label>
                     <input name="login_id" type="text" class="form-control" required>

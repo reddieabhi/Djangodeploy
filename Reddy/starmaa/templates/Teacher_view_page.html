@@ -83,6 +83,13 @@
     </style>
 </head>
 <body>
+    {% if messages %}
+    <div class="alert alert-primary" role="alert">
+      {% for message in messages %}
+      {{ message }}
+      {% endfor %}
+    </div>
+    {% endif %}
     <h1><span class="school-emoji">🏫</span>Prince School</h1>
 
     <div class="button-group">

@@ -80,6 +80,7 @@
 
 <body>
     <br>
+    
     <table class="table">
         <thead>
             <tr>
@@ -90,19 +91,19 @@
         <tbody>
             <tr>
                 <td>Name</td>
-                <td>{{ stud.st_name }}</td>
+                <td>{{ stud.student_details.st_name }}</td>
             </tr>
             <tr>
                 <td>Birth Year</td>
-                <td>{{ stud.st_birth_year }}</td>
+                <td>{{ stud.student_details.st_birth_year }}</td>
             </tr>
             <tr>
                 <td>Place</td>
-                <td>{{ stud.st_birth_place }}</td>
+                <td>{{ stud.student_details.st_birth_place }}</td>
             </tr>
             <tr>
                 <td>Parent Name</td>
-                <td>{{ stud.st_parent_name }}</td>
+                <td>{{ stud.student_details.st_parent_name }}</td>
             </tr>
         </tbody>
     </table>
