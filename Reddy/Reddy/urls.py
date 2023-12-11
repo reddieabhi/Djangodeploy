@@ -43,6 +43,7 @@ urlpatterns = [
     path("stud_login/",stud_login,name = 'stud_login'),
     path("update_exam/<id1>/",update_exam,name = 'update_exam'),
     path("delete_exam/<id1>/",delete_exam, name = 'delete_exam'),
+    path('get_current_time/', get_current_time, name='get_current_time'),
     #path("stud_portal/<id1>/",student_portal , name='student_portal'),
     path("",home_page,name="home_page")
 

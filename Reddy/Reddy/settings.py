@@ -43,13 +43,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'channels'
 ]
 
 EXTERNAL_APPS = [
-    'starmaa'
+    'starmaa',
+
 ]
 
 INSTALLED_APPS += EXTERNAL_APPS
+
+ASGI_APPLICATION = 'your_project.routing.application'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

@@ -10,10 +10,24 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
+from django.shortcuts import render
+from datetime import datetime
+from django.utils import timezone
+
+
+from django.http import JsonResponse
+from django.utils import timezone
+from datetime import datetime
+
+def get_current_time(request):
+    current_time = timezone.localtime(timezone.now()).strftime('%H:%M:%S')
+    return JsonResponse({'current_time': current_time})
+
 
 
 
 def home_page(request):
+    timezone.activate('Asia/Kolkata')
     return render(request,"Home_page.html")
 
 
@@ -68,16 +82,55 @@ def login_page(request):
 from django.db.models import Sum
 
 
+
+from django.db.models import Sum, F, ExpressionWrapper, fields
+from django.db.models.functions import Coalesce
+
+def get_student_rank(student_id, unit_id):
+    # Get the student
+    student = StudentLogin.objects.get(student_id=student_id)
+
+    # Get the unit
+    unit = Unit.objects.get(unit_id=unit_id)
+
+    # Calculate total marks for the specified unit
+    total_marks = (
+        Marks.objects
+        .filter(student=student, unit=unit)
+        .aggregate(total=Coalesce(Sum('marks'), 0))
+    )['total']
+
+    # Calculate rank for the specified unit
+    rank_query = (
+        Marks.objects
+        .filter(unit=unit)
+        .values('student')
+        .annotate(total=Coalesce(Sum('marks'), 0))
+        .order_by('-total')
+    )
+
+    rank_list = list(rank_query.values_list('student', flat=True))
+
+    # Find the index of the current student in the ranked list
+    rank = rank_list.index(student.id) + 1
+
+    return rank, total_marks
+
+
 def view_student(request, id1, id2):
     st = StudentLogin.objects.filter(student_id=id1)
         
     l = st[0].student_details
     u = Unit.objects.filter(unit_id=id2)
     
+    marks = Marks.objects.filter(unit=u[0])
+    st_mark = marks.filter(student=st[0])
     total_marks = 0
     rank = 1
+    rank, total_marks = get_student_rank(id1, id2)
 
-    if st and u:
+    '''
+        if st and u:
         # Retrieve marks for the specified unit
         marks = Marks.objects.filter(unit=u[0])
         st_mark = marks.filter(student=st[0])
@@ -89,10 +142,15 @@ def view_student(request, id1, id2):
         if total_marks > 0:
             higher_ranks = marks.filter(marks__gt=total_marks).count()
             rank += higher_ranks
+    '''
 
     context = {'stud': l, 'mark': st_mark, 'total_marks': total_marks, 'rank': rank}
 
     return render(request, "view_my_new.html", context)
+
+
+
+
 
 
 
@@ -120,6 +178,7 @@ def stud_login(request):
             messages.error(request,"Invalid Password")
             return redirect('/stud_login/')
         units = Unit.objects.all()
+        
         context = {'stud':stu[0], 'unit':units}
         return render(request, "student_portal.html", context)
 
@@ -275,7 +334,7 @@ def update_student(request,st_id,unit_id):
             if m.subject.subject_name == 'Physics':
                 m.marks = pm
                 m.save()
-            if m.subject.subject_name == 'Social':
+            if m.subject.subject_name == 'Socical21':
                 m.marks = sm
                 m.save()
 
